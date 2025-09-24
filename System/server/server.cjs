@@ -58,6 +58,22 @@ const upload = multer({
 app.use('/detect_results', express.static(path.join(__dirname, 'detect_results')));
 app.use('/crop_imgs', express.static(path.join(__dirname, 'crop_imgs')));
 
+// Serve crop recommendation output.json via API
+app.get('/api/crop/output', (req, res) => {
+  try {
+    const filePath = path.join(__dirname, 'crop_prediction', 'crop_data', 'output.json');
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ success: false, message: 'output.json not found' });
+    }
+    const content = fs.readFileSync(filePath, 'utf8');
+    const json = JSON.parse(content);
+    return res.status(200).json(json);
+  } catch (error) {
+    console.error('Error serving /api/crop/output:', error);
+    return res.status(500).json({ success: false, message: 'Failed to read output.json' });
+  }
+});
+
 // Create directory for field coordinates if it doesn't exist
 const fieldCoordsDir = path.join(__dirname, 'Field_co-ordinates');
 if (!fs.existsSync(fieldCoordsDir)) {

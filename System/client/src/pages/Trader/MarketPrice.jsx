@@ -7,7 +7,7 @@ export default function App() {
   const [state, setState] = useState("Maharashtra");
   const [loading, setLoading] = useState(false);
 
-  const API_KEY = "579b464db66ec23bdd00000183ee1027015a4cf26fd984c7ca5691ee";
+  const API_KEY = import.meta.env.VITE_DATA_GOV_API_KEY;
 
   const fetchData = async () => {
     setLoading(true);

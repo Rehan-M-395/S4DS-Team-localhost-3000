@@ -563,7 +563,7 @@ const Dashboard = () => {
     );
   };
 
-  return (
+  return (  
     <div className={`min-h-screen relative overflow-hidden transition-all duration-2000`} style={{
       background: `linear-gradient(135deg, ${temperatureColor} 0%, rgba(255,255,255,0.05) 100%)`,
       backgroundImage: theme.night ? 
@@ -594,268 +594,252 @@ const Dashboard = () => {
       <div className="relative z-10 p-6">
         {/* Enhanced Header */}
         <motion.div 
-          className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12"
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
+  className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 p-6 bg-white rounded-3xl shadow-xl"
+  initial={{ opacity: 0, y: -100 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
+>
+  {/* Left Section */}
+  <div className="flex items-center mb-6 lg:mb-0">
+    <motion.div 
+      className="w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg mr-6"
+      style={{
+        background: 'linear-gradient(135deg, #6FCF97, #27AE60)',
+        filter: 'drop-shadow(0 10px 25px rgba(39, 174, 96, 0.5))'
+      }}
+      whileHover={{ 
+        scale: 1.1, 
+        rotate: [0, 5, -5, 0],
+        boxShadow: '0 20px 40px rgba(39, 174, 96, 0.5)'
+      }}
+      whileTap={{ scale: 0.95 }}
+      animate={{
+        boxShadow: [
+          '0 10px 25px rgba(39, 174, 96, 0.5)',
+          '0 15px 35px rgba(39, 174, 96, 0.6)',
+          '0 10px 25px rgba(39, 174, 96, 0.5)'
+        ]
+      }}
+      transition={{ duration: 3, repeat: Infinity }}
+    >
+      <motion.span 
+        className="text-4xl"
+        animate={{ rotate: [0, 10, -10, 0] }}
+        transition={{ duration: 4, repeat: Infinity }}
+      >
+        🌱
+      </motion.span>
+    </motion.div>
+
+    <div>
+      <motion.h1 
+        className="text-4xl font-bold text-green-700 mb-2"
+        style={{ textShadow: '0 0 15px rgba(39, 174, 96, 0.5)' }}
+        animate={{
+          textShadow: [
+            '0 0 15px rgba(39, 174, 96, 0.5)',
+            '0 0 25px rgba(39, 174, 96, 0.7)',
+            '0 0 15px rgba(39, 174, 96, 0.5)'
+          ]
+        }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        Smart Farm Dashboard
+      </motion.h1>
+
+      <motion.p 
+        className="text-lg text-green-600 opacity-80"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.8 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
+        AI-Powered Agricultural Intelligence • {theme.night ? '🌙 Night Mode' : '☀️ Day Mode'}
+      </motion.p>
+    </div>
+  </div>
+  
+  {/* Right Section */}
+  <motion.div 
+    className="flex items-center space-x-6"
+    initial={{ opacity: 0, x: 100 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 1, delay: 0.3 }}
+  >
+    <div className="text-right text-green-700 opacity-80">
+      <div className="text-sm font-medium">Last Updated</div>
+      <div className="text-lg">
+        {currentTime.toLocaleDateString()} • {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </div>
+    </div>
+    
+    <motion.button 
+      className="relative px-6 py-3 rounded-2xl font-medium transition-all duration-300 overflow-hidden group"
+      style={{
+        background: 'rgba(255,255,255,0.8)',
+        color: '#27AE60',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(39, 174, 96, 0.5)',
+        boxShadow: '0 5px 15px rgba(39,174,96,0.2)'
+      }}
+      whileHover={{ 
+        scale: 1.05,
+        boxShadow: '0 10px 30px rgba(39, 174, 96, 0.4)'
+      }}
+      whileTap={{ scale: 0.95 }}
+      onClick={() => {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 1500);
+      }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+        style={{ background: 'linear-gradient(45deg, #6FCF97, #27AE60)' }}
+      />
+      <div className="relative flex items-center">
+        <motion.div
+          animate={loading ? { rotate: 360 } : { rotate: 0 }}
+          transition={{ duration: 1, repeat: loading ? Infinity : 0, ease: "linear" }}
+          className="mr-2 text-xl"
         >
-          <div className="flex items-center mb-6 lg:mb-0">
-            <motion.div 
-              className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl mr-6`}
-              style={{
-                background: `linear-gradient(135deg, ${theme.primary})`,
-                filter: `drop-shadow(0 10px 25px ${theme.glowColor})`
-              }}
-              whileHover={{ 
-                scale: 1.1, 
-                rotate: [0, 5, -5, 0],
-                boxShadow: `0 20px 40px ${theme.glowColor}`
-              }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                boxShadow: [
-                  `0 10px 25px ${theme.glowColor}`,
-                  `0 15px 35px ${theme.glowColor}`,
-                  `0 10px 25px ${theme.glowColor}`
-                ]
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              <motion.span 
-                className="text-3xl"
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-              >
-                🚜
-              </motion.span>
-            </motion.div>
-            <div>
-              <motion.h1 
-                className={`text-4xl font-bold ${theme.accent} mb-2`}
-                style={{
-                  textShadow: `0 0 20px ${theme.glowColor}`,
-                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
-                }}
-                animate={{
-                  textShadow: [
-                    `0 0 20px ${theme.glowColor}`,
-                    `0 0 30px ${theme.glowColor}`,
-                    `0 0 20px ${theme.glowColor}`
-                  ]
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                Smart Farm Dashboard
-              </motion.h1>
-              <motion.p 
-                className={`text-lg ${theme.accent} opacity-80`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.8 }}
-                transition={{ delay: 0.5, duration: 1 }}
-              >
-                AI-Powered Agricultural Intelligence • {theme.night ? '🌙 Night Mode' : '☀️ Day Mode'}
-              </motion.p>
-            </div>
-          </div>
-          
-          <motion.div 
-            className="flex items-center space-x-6"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-          >
-            <div className={`text-right ${theme.accent} opacity-80`}>
-              <div className="text-sm font-medium">Last Updated</div>
-              <div className="text-lg">
-                {currentTime.toLocaleDateString()} • {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </div>
-            </div>
-            
-            <motion.button 
-              className="relative px-6 py-3 rounded-2xl font-medium transition-all duration-300 overflow-hidden group"
-              style={{
-                background: theme.cardBg,
-                color: theme.accent.replace('text-', ''),
-                backdropFilter: 'blur(20px)',
-                border: `1px solid ${theme.glowColor}`
-              }}
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: `0 10px 30px ${theme.glowColor}`
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                setLoading(true);
-                setTimeout(() => setLoading(false), 1500);
-              }}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-20 transition-opacity duration-300"
-                style={{
-                  background: `linear-gradient(45deg, ${theme.primary})`
-                }}
-              />
-              <div className="relative flex items-center">
-                <motion.div
-                  animate={loading ? { rotate: 360 } : { rotate: 0 }}
-                  transition={{ duration: 1, repeat: loading ? Infinity : 0, ease: "linear" }}
-                  className="mr-2 text-xl"
-                >
-                  🔄
-                </motion.div>
-                <span>Refresh Data</span>
-              </div>
-            </motion.button>
-          </motion.div>
+          🔄
         </motion.div>
+        <span>Refresh Data</span>
+      </div>
+    </motion.button>
+  </motion.div>
+</motion.div>
+
 
         {/* Hero Weather Display */}
         <motion.div 
-          className="relative mb-12 overflow-hidden rounded-3xl"
-          style={{
-            background: theme.cardBg,
-            backdropFilter: 'blur(30px)',
-            border: `1px solid ${theme.glowColor}`
-          }}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.4 }}
-          whileHover={{
-            boxShadow: `0 25px 50px ${theme.glowColor}`
-          }}
+  className="relative mb-12 overflow-hidden rounded-3xl bg-white shadow-xl"
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 1.2, delay: 0.4 }}
+  whileHover={{ boxShadow: '0 25px 50px rgba(39, 174, 96, 0.3)' }}
+>
+  {/* Subtle background gradient */}
+  <div className="absolute inset-0 opacity-10" style={{
+    background: 'linear-gradient(135deg, #A8E6CF, #DFFFD6)'
+  }} />
+
+  <div className="relative z-10 p-8">
+    <div className="flex flex-col lg:flex-row items-center justify-between">
+      
+      {/* Left Section: Main Weather Info */}
+      <div className="flex items-center mb-8 lg:mb-0">
+        <WeatherIcon3D weather={weatherData.weather} size="w-24 h-24" />
+        <div className="ml-8">
+          <motion.div 
+            className="text-6xl font-bold text-green-700 mb-2"
+            style={{ textShadow: '0 0 25px rgba(39, 174, 96, 0.5)' }}
+            animate={{ scale: [1, 1.03, 1] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+            {Math.round(weatherData.temperature)}°
+          </motion.div>
+          <motion.div 
+            className="text-2xl text-green-600 opacity-80 capitalize font-medium mb-2"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 0.8, x: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            {weatherData.weather}
+          </motion.div>
+          <motion.div 
+            className="text-lg text-green-500 opacity-70 flex items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 0.7, y: 0 }}
+            transition={{ delay: 1, duration: 0.8 }}
+          >
+            📍 {weatherData.place.charAt(0).toUpperCase() + weatherData.place.slice(1)} • Feels like {Math.round(weatherData.feels_like)}°C
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Right Section: Stats Grid */}
+      <div className="grid grid-cols-3 gap-6">
+
+        {/* Humidity */}
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          whileHover={{ scale: 1.05 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br opacity-5" style={{
-            background: `linear-gradient(135deg, ${theme.primary})`
-          }} />
-          
-          <div className="relative z-10 p-8">
-            <div className="flex flex-col lg:flex-row items-center justify-between">
-              <div className="flex items-center mb-8 lg:mb-0">
-                <WeatherIcon3D weather={weatherData.weather} size="w-24 h-24" />
-                <div className="ml-8">
-                  <motion.div 
-                    className={`text-6xl font-bold ${theme.accent} mb-2`}
-                    style={{
-                      textShadow: `0 0 30px ${theme.glowColor}`,
-                      filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
-                    }}
-                    animate={{
-                      scale: [1, 1.02, 1]
-                    }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  >
-                    {Math.round(weatherData.temperature)}°
-                  </motion.div>
-                  <motion.div 
-                    className={`text-2xl ${theme.accent} opacity-80 capitalize font-medium mb-2`}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 0.8, x: 0 }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
-                  >
-                    {weatherData.weather}
-                  </motion.div>
-                  <motion.div 
-                    className={`text-lg ${theme.accent} opacity-60 flex items-center`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 0.6, y: 0 }}
-                    transition={{ delay: 1, duration: 0.8 }}
-                  >
-                    📍 {weatherData.place.charAt(0).toUpperCase() + weatherData.place.slice(1)} • Feels like {Math.round(weatherData.feels_like)}°C
-                  </motion.div>
-                </div>
-              </div>
-              
-              {/* Weather Stats Grid */}
-              <div className="grid grid-cols-3 gap-6">
-                {/* Humidity */}
-                <motion.div 
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.8 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div 
-                    className="relative w-16 h-16 mx-auto mb-3"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  >
-                    <div className="w-16 h-16 rounded-full border-4 border-opacity-20" style={{ borderColor: theme.accent.replace('text-', '') }} />
-                    <motion.div 
-                      className="absolute inset-0 rounded-full border-4 border-transparent"
-                      style={{
-                        borderTopColor: theme.accent.replace('text-', ''),
-                        borderRightColor: theme.accent.replace('text-', ''),
-                        transform: `rotate(${(weatherData.humidity / 100) * 360}deg)`
-                      }}
-                      initial={{ transform: 'rotate(0deg)' }}
-                      animate={{ transform: `rotate(${(weatherData.humidity / 100) * 360}deg)` }}
-                      transition={{ duration: 2, delay: 1.5 }}
-                    />
-                    <div className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${theme.accent}`}>
-                      {weatherData.humidity}%
-                    </div>
-                  </motion.div>
-                  <div className={`text-sm ${theme.accent} opacity-70`}>Humidity</div>
-                </motion.div>
-                
-                {/* Wind Speed */}
-                <motion.div 
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.4, duration: 0.8 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                    <motion.div
-                      animate={{ 
-                        rotate: [0, 360],
-                        scale: [1, 1.1, 1]
-                      }}
-                      transition={{ 
-                        rotate: { duration: 2, repeat: Infinity, ease: "linear" },
-                        scale: { duration: 1, repeat: Infinity, repeatType: "reverse" }
-                      }}
-                      className="text-3xl"
-                    >
-                      💨
-                    </motion.div>
-                  </motion.div>
-                  <div className={`text-lg font-bold ${theme.accent}`}>{weatherData.wind_speed}</div>
-                  <div className={`text-sm ${theme.accent} opacity-70`}>km/h</div>
-                </motion.div>
-                
-                {/* Time */}
-                <motion.div 
-                  className="text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.6, duration: 0.8 }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                    <motion.div
-                      animate={{ 
-                        scale: [1, 1.05, 1]
-                      }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                      className="text-3xl"
-                    >
-                      {theme.night ? '🌙' : '⏰'}
-                    </motion.div>
-                  </motion.div>
-                  <div className={`text-sm font-bold ${theme.accent}`}>
-                    {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </div>
-                  <div className={`text-xs ${theme.accent} opacity-70`}>
-                    {theme.night ? 'Night' : 'Day'} Time
-                  </div>
-                </motion.div>
-              </div>
+          <motion.div 
+            className="relative w-16 h-16 mx-auto mb-3"
+          >
+            <div className="w-16 h-16 rounded-full border-4 border-opacity-20 border-green-300" />
+            <motion.div 
+              className="absolute inset-0 rounded-full border-4 border-transparent"
+              style={{
+                borderTopColor: '#27AE60',
+                borderRightColor: '#27AE60',
+                transform: `rotate(${(weatherData.humidity / 100) * 360}deg)`
+              }}
+              initial={{ transform: 'rotate(0deg)' }}
+              animate={{ transform: `rotate(${(weatherData.humidity / 100) * 360}deg)` }}
+              transition={{ duration: 2, delay: 1.5 }}
+            />
+            <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-green-700">
+              {weatherData.humidity}%
             </div>
+          </motion.div>
+          <div className="text-sm text-green-600 opacity-70">Humidity</div>
+        </motion.div>
+
+        {/* Wind Speed */}
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <motion.div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ scale: { duration: 1, repeat: Infinity, repeatType: "reverse" } }}
+              className="text-3xl"
+            >
+              💨
+            </motion.div>
+          </motion.div>
+          <div className="text-lg font-bold text-green-700">{weatherData.wind_speed}</div>
+          <div className="text-sm text-green-600 opacity-70">km/h</div>
+        </motion.div>
+
+        {/* Time */}
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6, duration: 0.8 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <motion.div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+            <motion.div
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 1, repeat: Infinity }}
+              className="text-3xl"
+            >
+              {theme.night ? '🌙' : '⏰'}
+            </motion.div>
+          </motion.div>
+          <div className="text-sm font-bold text-green-700">
+            {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </div>
+          <div className="text-xs text-green-500 opacity-70">
+            {theme.night ? 'Night' : 'Day'} Time
           </div>
         </motion.div>
+      </div>
+    </div>
+  </div>
+</motion.div>
+
 
         {/* Enhanced Weather Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -863,16 +847,16 @@ const Dashboard = () => {
           <motion.div 
             className="relative overflow-hidden rounded-2xl p-6"
             style={{
-              background: theme.cardBg,
-              backdropFilter: 'blur(20px)',
-              border: `1px solid ${theme.glowColor}`
+              background: '#ffffff',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(0,0,0,0.08)'
             }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             whileHover={{ 
               scale: 1.03,
-              boxShadow: `0 20px 40px ${theme.glowColor}`
+              boxShadow: '0 20px 40px rgba(0,0,0,0.08)'
             }}
           >
             <motion.div
@@ -909,13 +893,13 @@ const Dashboard = () => {
                   animate={{ x: [0, 2, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 >
-                  <div className={`text-xs ${theme.accent} opacity-60 mb-1`}>Current</div>
-                  <div className={`text-xs ${theme.accent} opacity-40`}>Temperature</div>
+                  <div className="text-xs text-gray-600 mb-1">Current</div>
+                  <div className="text-xs text-gray-500">Temperature</div>
                 </motion.div>
               </div>
               
               <motion.div 
-                className={`text-3xl font-bold ${theme.accent} mb-2`}
+                className="text-3xl font-bold text-gray-800 mb-2"
                 animate={{
                   color: ['#ef4444', '#f97316', '#eab308', '#ef4444']
                 }}
@@ -924,7 +908,7 @@ const Dashboard = () => {
                 {Math.round(weatherData.temperature)}°C
               </motion.div>
               
-              <div className={`text-sm ${theme.accent} opacity-70 mb-3`}>
+              <div className="text-sm text-gray-600 mb-3">
                 Feels like {Math.round(weatherData.feels_like)}°C
               </div>
               
@@ -948,16 +932,16 @@ const Dashboard = () => {
           <motion.div 
             className="relative overflow-hidden rounded-2xl p-6"
             style={{
-              background: theme.cardBg,
-              backdropFilter: 'blur(20px)',
-              border: `1px solid ${theme.glowColor}`
+              background: '#ffffff',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(0,0,0,0.08)'
             }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             whileHover={{ 
               scale: 1.03,
-              boxShadow: `0 20px 40px ${theme.glowColor}`
+              boxShadow: '0 20px 40px rgba(0,0,0,0.08)'
             }}
           >
             <motion.div
@@ -1000,13 +984,13 @@ const Dashboard = () => {
                   animate={{ x: [0, -2, 0] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  <div className={`text-xs ${theme.accent} opacity-60 mb-1`}>Air</div>
-                  <div className={`text-xs ${theme.accent} opacity-40`}>Humidity</div>
+                  <div className="text-xs text-gray-600 mb-1">Air</div>
+                  <div className="text-xs text-gray-500">Humidity</div>
                 </motion.div>
               </div>
               
               <motion.div 
-                className={`text-3xl font-bold ${theme.accent} mb-2`}
+                className="text-3xl font-bold text-gray-800 mb-2"
                 animate={{
                   scale: [1, 1.02, 1]
                 }}
@@ -1015,7 +999,7 @@ const Dashboard = () => {
                 {weatherData.humidity}%
               </motion.div>
               
-              <div className={`text-sm ${theme.accent} opacity-70 mb-3`}>
+              <div className="text-sm text-gray-600 mb-3">
                 {weatherData.humidity > 70 ? 'High' : weatherData.humidity > 40 ? 'Moderate' : 'Low'} Moisture
               </div>
               
@@ -1040,16 +1024,16 @@ const Dashboard = () => {
           <motion.div 
             className="relative overflow-hidden rounded-2xl p-6"
             style={{
-              background: theme.cardBg,
-              backdropFilter: 'blur(20px)',
-              border: `1px solid ${theme.glowColor}`
+              background: '#ffffff',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(0,0,0,0.08)'
             }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.0 }}
             whileHover={{ 
               scale: 1.03,
-              boxShadow: `0 20px 40px ${theme.glowColor}`
+              boxShadow: '0 20px 40px rgba(0,0,0,0.08)'
             }}
           >
             <motion.div
@@ -1065,7 +1049,6 @@ const Dashboard = () => {
                 <motion.div 
                   className="w-12 h-12 bg-gradient-to-br from-gray-400 to-slate-500 rounded-xl flex items-center justify-center shadow-lg"
                   animate={{
-                    rotate: [0, 360],
                     boxShadow: [
                       '0 4px 15px rgba(100, 116, 139, 0.3)',
                       '0 8px 25px rgba(100, 116, 139, 0.5)',
@@ -1073,7 +1056,6 @@ const Dashboard = () => {
                     ]
                   }}
                   transition={{ 
-                    rotate: { duration: 4, repeat: Infinity, ease: "linear" },
                     boxShadow: { duration: 2, repeat: Infinity }
                   }}
                 >
@@ -1084,13 +1066,13 @@ const Dashboard = () => {
                   animate={{ x: [0, 3, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <div className={`text-xs ${theme.accent} opacity-60 mb-1`}>Wind</div>
-                  <div className={`text-xs ${theme.accent} opacity-40`}>Speed</div>
+                  <div className="text-xs text-gray-600 mb-1">Wind</div>
+                  <div className="text-xs text-gray-500">Speed</div>
                 </motion.div>
               </div>
               
               <motion.div 
-                className={`text-3xl font-bold ${theme.accent} mb-2`}
+                className="text-3xl font-bold text-gray-800 mb-2"
                 animate={{ x: [0, 2, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
@@ -1098,7 +1080,7 @@ const Dashboard = () => {
                 <span className="text-lg"> km/h</span>
               </motion.div>
               
-              <div className={`text-sm ${theme.accent} opacity-70 mb-3`}>
+              <div className="text-sm text-gray-600 mb-3">
                 {weatherData.wind_speed < 2 ? 'Calm' : 
                  weatherData.wind_speed < 6 ? 'Light breeze' :
                  weatherData.wind_speed < 12 ? 'Moderate' : 'Strong wind'}
@@ -1132,25 +1114,25 @@ const Dashboard = () => {
           <motion.div 
             className="relative overflow-hidden rounded-2xl p-6"
             style={{
-              background: theme.cardBg,
-              backdropFilter: 'blur(20px)',
-              border: `1px solid ${theme.glowColor}`
+              background: '#ffffff',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(0,0,0,0.08)'
             }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
             whileHover={{ 
               scale: 1.03,
-              boxShadow: `0 20px 40px ${theme.glowColor}`
+              boxShadow: '0 20px 40px rgba(0,0,0,0.08)'
             }}
           >
             <motion.div
-              className="absolute inset-0 opacity-10"
+              className="absolute inset-0 opacity-0"
               style={{
-                background: `linear-gradient(135deg, ${theme.primary})`
+                background: 'transparent'
               }}
               animate={{
-                opacity: [0.05, 0.2, 0.05]
+                opacity: [0]
               }}
               transition={{ duration: 4, repeat: Infinity, delay: 3 }}
             />
@@ -1158,16 +1140,9 @@ const Dashboard = () => {
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
                 <motion.div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg"
-                  style={{
-                    background: `linear-gradient(135deg, ${theme.primary})`
-                  }}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg bg-gray-100"
                   animate={{
-                    boxShadow: [
-                      `0 4px 15px ${theme.glowColor}`,
-                      `0 8px 25px ${theme.glowColor}`,
-                      `0 4px 15px ${theme.glowColor}`
-                    ]
+                    boxShadow: ['0 4px 15px rgba(0,0,0,0.06)']
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
@@ -1181,35 +1156,27 @@ const Dashboard = () => {
                   }}
                   transition={{ duration: 6, repeat: Infinity }}
                 >
-                  <div className={`text-xs ${theme.accent} opacity-60 mb-1`}>Current</div>
-                  <div className={`text-xs ${theme.accent} opacity-40`}>Conditions</div>
+                  <div className="text-xs text-gray-600 mb-1">Current</div>
+                  <div className="text-xs text-gray-500">Conditions</div>
                 </motion.div>
               </div>
               
               <motion.div 
-                className={`text-lg font-bold ${theme.accent} mb-2 capitalize`}
-                animate={{
-                  textShadow: [
-                    `0 0 10px ${theme.glowColor}`,
-                    `0 0 20px ${theme.glowColor}`,
-                    `0 0 10px ${theme.glowColor}`
-                  ]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
+                className="text-lg font-bold text-gray-800 mb-2 capitalize"
               >
                 {weatherData.weather}
               </motion.div>
               
-              <div className={`text-sm ${theme.accent} opacity-70 mb-4`}>
+              <div className="text-sm text-gray-600 mb-4">
                 {theme.night ? 'Night conditions' : 'Daytime weather'}
               </div>
               
               <motion.div 
-                className="flex items-center justify-between text-xs opacity-60"
+                className="flex items-center justify-between text-xs text-gray-500"
                 animate={{ y: [0, -1, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <span className={theme.accent}>Perfect for farming</span>
+                <span>Perfect for farming</span>
                 <motion.span 
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
@@ -1225,41 +1192,37 @@ const Dashboard = () => {
         <motion.div 
           className="relative overflow-hidden rounded-3xl p-8 mb-8"
           style={{
-            background: theme.cardBg,
-            backdropFilter: 'blur(30px)',
-            border: `1px solid ${theme.glowColor}`
+            background: '#ffffff',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(0,0,0,0.08)'
           }}
           initial={{ opacity: 0, y: 80 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.4 }}
           whileHover={{
-            boxShadow: `0 30px 60px ${theme.glowColor}`
+            boxShadow: '0 30px 60px rgba(0,0,0,0.08)'
           }}
         >
           <motion.div
-            className="absolute inset-0 opacity-5"
+            className="absolute inset-0 opacity-0"
             style={{
-              background: `linear-gradient(135deg, ${theme.primary})`
+              background: 'transparent'
             }}
             animate={{
-              background: [
-                `linear-gradient(135deg, ${theme.primary})`,
-                `linear-gradient(225deg, ${theme.primary})`,
-                `linear-gradient(135deg, ${theme.primary})`
-              ]
+              background: ['transparent']
             }}
             transition={{ duration: 8, repeat: Infinity }}
           />
           
           <div className="relative z-10">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-8 pb-6 border-b border-opacity-20" style={{ borderColor: theme.glowColor }}>
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-8 pb-6 border-b border-opacity-20" style={{ borderColor: 'rgba(0,0,0,0.08)' }}>
               <motion.h3 
-                className={`text-2xl font-bold ${theme.accent} flex items-center mb-4 lg:mb-0`}
+                className="text-2xl font-bold text-gray-800 flex items-center mb-4 lg:mb-0"
                 animate={{
                   textShadow: [
-                    `0 0 20px ${theme.glowColor}`,
-                    `0 0 30px ${theme.glowColor}`,
-                    `0 0 20px ${theme.glowColor}`
+                    'none',
+                    'none',
+                    'none'
                   ]
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
@@ -1284,13 +1247,9 @@ const Dashboard = () => {
                 transition={{ delay: 1.8, duration: 0.8 }}
               >
                 <motion.span 
-                  className="px-4 py-2 bg-green-400 bg-opacity-20 text-green-300 rounded-full text-sm font-medium"
+                  className="px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-medium border border-green-100"
                   animate={{
-                    boxShadow: [
-                      '0 0 20px rgba(34, 197, 94, 0.2)',
-                      '0 0 30px rgba(34, 197, 94, 0.4)',
-                      '0 0 20px rgba(34, 197, 94, 0.2)'
-                    ]
+                    boxShadow: ['none']
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                   whileHover={{ scale: 1.05 }}
@@ -1299,13 +1258,9 @@ const Dashboard = () => {
                 </motion.span>
                 
                 <motion.button
-                  className="px-4 py-2 bg-blue-400 bg-opacity-20 text-blue-300 rounded-full text-sm font-medium"
+                  className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium border border-blue-100"
                   animate={{
-                    boxShadow: [
-                      '0 0 20px rgba(59, 130, 246, 0.2)',
-                      '0 0 30px rgba(59, 130, 246, 0.4)',
-                      '0 0 20px rgba(59, 130, 246, 0.2)'
-                    ]
+                    boxShadow: ['none']
                   }}
                   transition={{ duration: 2, repeat: Infinity, delay: 1 }}
                   whileHover={{ scale: 1.05 }}
@@ -1321,56 +1276,54 @@ const Dashboard = () => {
               <motion.div 
                 className="relative p-6 rounded-2xl"
                 style={{
-                  background: 'rgba(34, 197, 94, 0.1)',
-                  border: '1px solid rgba(34, 197, 94, 0.2)'
+                  background: '#ffffff',
+                  border: '1px solid rgba(0,0,0,0.08)'
                 }}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 2, duration: 0.8 }}
                 whileHover={{ 
                   scale: 1.02,
-                  boxShadow: '0 10px 30px rgba(34, 197, 94, 0.2)'
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
                 }}
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-500 opacity-5 rounded-2xl"
-                  animate={{ opacity: [0.03, 0.08, 0.03] }}
+                  className="absolute inset-0 opacity-0 rounded-2xl"
+                  animate={{ opacity: [0] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 />
                 
                 <div className="relative z-10">
                   <div className="flex items-center mb-4">
                     <motion.div 
-                      className="w-12 h-12 bg-green-400 bg-opacity-20 rounded-xl flex items-center justify-center mr-4"
+                      className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mr-4"
                       animate={{
-                        rotate: [0, 360],
                         scale: [1, 1.1, 1]
                       }}
                       transition={{ 
-                        rotate: { duration: 8, repeat: Infinity, ease: "linear" },
                         scale: { duration: 2, repeat: Infinity }
                       }}
                     >
                       <motion.span 
-                        className="text-green-400 text-2xl"
+                        className="text-green-600 text-2xl"
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
                       >
                         🌱
                       </motion.span>
                     </motion.div>
-                    <div className="text-sm text-green-300 opacity-80 font-medium">Field Identity</div>
+                    <div className="text-sm text-gray-600 font-medium">Field Identity</div>
                   </div>
                   <motion.div 
-                    className="text-xl font-bold text-green-200 mb-2"
+                    className="text-xl font-bold text-gray-800 mb-2"
                     animate={{ x: [0, 2, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     {fieldData.name}
                   </motion.div>
-                  <div className="text-sm text-green-300 opacity-60">{fieldData.location}</div>
+                  <div className="text-sm text-gray-500">{fieldData.location}</div>
                   <motion.div 
-                    className="mt-3 text-xs text-green-400 opacity-50"
+                    className="mt-3 text-xs text-gray-500"
                     animate={{ opacity: [0.3, 0.7, 0.3] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
@@ -1383,51 +1336,48 @@ const Dashboard = () => {
               <motion.div 
                 className="relative p-6 rounded-2xl"
                 style={{
-                  background: 'rgba(59, 130, 246, 0.1)',
-                  border: '1px solid rgba(59, 130, 246, 0.2)'
+                  background: '#ffffff',
+                  border: '1px solid rgba(0,0,0,0.08)'
                 }}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 2.2, duration: 0.8 }}
                 whileHover={{ 
                   scale: 1.02,
-                  boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)'
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
                 }}
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-500 opacity-5 rounded-2xl"
-                  animate={{ opacity: [0.03, 0.08, 0.03] }}
+                  className="absolute inset-0 opacity-0 rounded-2xl"
+                  animate={{ opacity: [0] }}
                   transition={{ duration: 4, repeat: Infinity, delay: 1 }}
                 />
                 
                 <div className="relative z-10">
                   <div className="flex items-center mb-4">
                     <motion.div 
-                      className="w-12 h-12 bg-blue-400 bg-opacity-20 rounded-xl flex items-center justify-center mr-4"
+                      className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mr-4"
                       animate={{
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 5, -5, 0]
+                        scale: [1, 1.1, 1]
                       }}
                       transition={{ duration: 3, repeat: Infinity }}
                     >
                       <motion.span 
-                        className="text-blue-400 text-2xl"
-                        animate={{ rotate: [0, 90, 180, 270, 360] }}
-                        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                        className="text-blue-600 text-2xl"
                       >
                         📏
                       </motion.span>
                     </motion.div>
-                    <div className="text-sm text-blue-300 opacity-80 font-medium">Field Size</div>
+                    <div className="text-sm text-gray-600 font-medium">Field Size</div>
                   </div>
                   <motion.div 
-                    className="text-xl font-bold text-blue-200 mb-2"
+                    className="text-xl font-bold text-gray-800 mb-2"
                     animate={{ x: [0, 2, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     {Math.round(fieldData.size)} acres
                   </motion.div>
-                  <div className="text-sm text-blue-300 opacity-60">Created: {new Date(fieldData.createdAt).toLocaleDateString()}</div>
+                  <div className="text-sm text-gray-500">Created: {new Date(fieldData.createdAt).toLocaleDateString()}</div>
                 </div>
               </motion.div>
 
@@ -1435,47 +1385,45 @@ const Dashboard = () => {
               <motion.div 
                 className="relative p-6 rounded-2xl"
                 style={{
-                  background: 'rgba(245, 158, 11, 0.1)',
-                  border: '1px solid rgba(245, 158, 11, 0.2)'
+                  background: '#ffffff',
+                  border: '1px solid rgba(0,0,0,0.08)'
                 }}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 2.4, duration: 0.8 }}
                 whileHover={{ 
                   scale: 1.02,
-                  boxShadow: '0 10px 30px rgba(245, 158, 11, 0.2)'
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
                 }}
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-amber-400 to-yellow-500 opacity-5 rounded-2xl"
-                  animate={{ opacity: [0.03, 0.08, 0.03] }}
+                  className="absolute inset-0 opacity-0 rounded-2xl"
+                  animate={{ opacity: [0] }}
                   transition={{ duration: 4, repeat: Infinity, delay: 2 }}
                 />
                 <div className="relative z-10">
                   <div className="flex items-center mb-4">
                     <motion.div 
-                      className="w-12 h-12 bg-amber-400 bg-opacity-20 rounded-xl flex items-center justify-center mr-4"
+                      className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mr-4"
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
                       <motion.span 
-                        className="text-amber-400 text-2xl"
-                        animate={{ rotate: [0, 10, -10, 0] }}
-                        transition={{ duration: 3, repeat: Infinity }}
+                        className="text-amber-600 text-2xl"
                       >
                         🌾
                       </motion.span>
                     </motion.div>
-                    <div className="text-sm text-amber-300 opacity-80 font-medium">Crop</div>
+                    <div className="text-sm text-gray-600 font-medium">Crop</div>
                   </div>
                   <motion.div 
-                    className="text-xl font-bold text-amber-200 mb-2"
+                    className="text-xl font-bold text-gray-800 mb-2"
                     animate={{ x: [0, 2, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     {fieldData.crop}
                   </motion.div>
-                  <div className="text-sm text-amber-300 opacity-60">Main cultivated crop</div>
+                  <div className="text-sm text-gray-500">Main cultivated crop</div>
                 </div>
               </motion.div>
             </div>
